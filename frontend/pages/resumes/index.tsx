@@ -31,7 +31,7 @@ export default function ResumesPage() {
       setError(null);
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`https://applixr-backend-production.up.railway.app/resumes`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/resumes`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ export default function ResumesPage() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const res = await fetch('https://applixr-backend-production.up.railway.app/resumes/upload', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/resumes/upload`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

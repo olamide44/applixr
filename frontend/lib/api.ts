@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { ApiError } from './types';
 
 const api = axios.create({
-  baseURL: 'https://applixr-backend-production.up.railway.app',
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
 });
 
 // Add a request interceptor to add the auth token
