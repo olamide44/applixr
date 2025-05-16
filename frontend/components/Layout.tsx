@@ -6,10 +6,10 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard/' },
-  { name: 'Resumes', href: '/resumes/' },
-  { name: 'Cover Letters', href: '/cover-letters/' },
-  { name: 'Applications', href: '/applications/' },
+  { name: 'Dashboard', href: '/dashboard' },
+  { name: 'Resumes', href: '/resumes' },
+  { name: 'Cover Letters', href: '/cover-letters' },
+  { name: 'Applications', href: '/applications' },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
