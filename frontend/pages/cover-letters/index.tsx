@@ -25,8 +25,8 @@ export default function CoverLettersPage() {
   const fetchData = async () => {
     try {
       const [coverLettersRes, resumesRes] = await Promise.all([
-        api.get('/cover-letters'),
-        api.get('/resumes'),
+        api.get('/cover-letters/'),
+        api.get('/resumes/'),
       ]);
       setCoverLetters(coverLettersRes.data);
       setResumes(resumesRes.data);

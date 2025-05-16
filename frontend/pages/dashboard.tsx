@@ -18,9 +18,9 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const [resumesRes, coverLettersRes, applicationsRes] = await Promise.all([
-          api.get('/resumes'),
-          api.get('/cover-letters'),
-          api.get('/applications'),
+          api.get('/resumes/'),
+          api.get('/cover-letters/'),
+          api.get('/applications/'),
         ]);
 
         setResumes(resumesRes.data);

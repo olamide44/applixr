@@ -31,7 +31,7 @@ export default function ApplicationsPage() {
 
   const fetchApplications = async () => {
     try {
-      const response = await api.get('/applications');
+      const response = await api.get('/applications/');
       setApplications(response.data);
     } catch (err) {
       setError(handleApiError(err).detail);
@@ -42,7 +42,7 @@ export default function ApplicationsPage() {
 
   const fetchResumes = async () => {
     try {
-      const response = await api.get('/resumes');
+      const response = await api.get('/resumes/');
       setResumes(response.data);
     } catch (err) {
       setError(handleApiError(err).detail);
@@ -61,7 +61,7 @@ export default function ApplicationsPage() {
       if (formData.cover_letter_id) form.append('cover_letter_id', formData.cover_letter_id);
       if (formData.job_url) form.append('job_url', formData.job_url);
 
-      const response = await api.post('/applications', form);
+      const response = await api.post('/applications/', form);
       setApplications([...applications, response.data]);
       setShowForm(false);
       setFormData({

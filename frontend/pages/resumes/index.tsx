@@ -31,7 +31,7 @@ export default function ResumesPage() {
       setError(null);
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/resumes`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/resumes/`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
