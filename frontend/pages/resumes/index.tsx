@@ -31,7 +31,8 @@ export default function ResumesPage() {
       setError(null);
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`https://applixr-backend-production.up.railway.app/resumes/upload`, {
+        const res = await fetch(`https://applixr-backend-production.up.railway.app/resumes`, {
+          method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
           },
