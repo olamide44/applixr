@@ -105,6 +105,7 @@ export default function Signup() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            
             <div>
               <label htmlFor="confirm-password" className="sr-only">
                 Confirm password
