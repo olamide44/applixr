@@ -56,7 +56,7 @@ export default function ApplicationDetailPage() {
 
   const handleAddNote = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newNote.trim()) return;
+    if (!newNote.trim() || !application) return;
 
     try {
       const form = new FormData();
@@ -182,7 +182,7 @@ export default function ApplicationDetailPage() {
               <div className="mt-4 space-y-4">
                 {application.notes ? (
                   <ul className="space-y-4">
-                    {application.notes.split('\n').filter(note => note.trim()).map((note, index) => (
+                    {application.notes.split('\n').filter((note: string) => note.trim()).map((note: string, index: number) => (
                       <li key={index} className="bg-gray-50 p-4 rounded-lg">
                         <p className="text-sm text-gray-900">{note}</p>
                       </li>

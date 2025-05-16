@@ -1,6 +1,5 @@
-import formidable from 'formidable';
+import formidable, { File as FormidableFile } from 'formidable';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import path from 'path';
 
 // Disable the default body parser to handle file uploads
 export const config = {
@@ -61,25 +60,26 @@ async function handleGetResumes(req: NextApiRequest, res: NextApiResponse) {
 
 async function handleUploadResume(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const form = formidable({
-      uploadDir: path.join(process.cwd(), 'uploads'),
-      keepExtensions: true,
-    });
+const form = new formidable.IncomingForm();
 
-    const [fields, files] = await new Promise<[formidable.Fields, formidable.Files]>(
-      (resolve, reject) => {
-        form.parse(req, (err, fields, files) => {
-          if (err) reject(err);
-          resolve([fields, files]);
-        });
-      }
-    );
+const [fields, files]: [formidable.Fields, formidable.Files] = await new Promise((resolve, reject) => {
+  form.parse(req, (err, fields, files) => {
+    if (err) return reject(err);
+    resolve([fields, files]);
+  });
+});
 
-    const file = files.file as formidable.File;
-    if (!file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
+const fileData = files.file;
 
+// Handle file being undefined or an array
+const file = Array.isArray(fileData) ? fileData[0] : fileData;
+
+if (!file) {
+  return res.status(400).json({ message: 'No file uploaded' });
+}
+
+// You can now safely use file as FormidableFile
+console.log((file as FormidableFile).originalFilename);
     // In a real application, you would:
     // 1. Verify the JWT token
     // 2. Get the user ID from the token

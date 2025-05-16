@@ -122,3 +122,4 @@ Once the backend is running, visit http://localhost:8000/docs for the interactiv
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details. 
+# applixr

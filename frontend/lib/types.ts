@@ -38,11 +38,12 @@ export interface Application {
   company_name: string;
   position: string;
   job_description: string;
+  job_url?: string;
   status: 'draft' | 'applied' | 'interview' | 'offer' | 'rejected' | 'accepted';
   application_deadline: string;
   created_at: string;
   updated_at: string;
-  notes?: string[];
+  notes?: string;
 }
 
 export interface ApiError {
