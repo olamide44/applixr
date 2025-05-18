@@ -30,7 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="flex">
                   <div className="flex-shrink-0 flex items-center">
                     <Link href="/dashboard" className="text-xl font-bold text-gray-900">
-                      Job Platform
+                      Applixr
                     </Link>
                   </div>
                   <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
