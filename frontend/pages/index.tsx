@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Applixr</title>
+        <title>Job Application Platform</title>
         <meta name="description" content="Manage your job applications with AI-powered tools" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
