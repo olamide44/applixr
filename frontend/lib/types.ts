@@ -43,7 +43,7 @@ export interface Application {
   application_deadline: string;
   created_at: string;
   updated_at: string;
-  notes?: string[];
+  notes?: string;
 }
 
 export interface ApiError {
