@@ -25,11 +25,11 @@ export default function Home() {
                 Track applications, get AI-powered insights, and land your dream job with our comprehensive platform.
               </p>
               <div className="flex gap-4">
-                <Link href="/auth/login" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
+                <Link href="/auth/signup" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
                   Get Started
                 </Link>
-                <Link href="/auth/register" className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors">
-                  Sign Up
+                <Link href="/auth/login" className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors">
+                  Sign In
                 </Link>
               </div>
             </div>
