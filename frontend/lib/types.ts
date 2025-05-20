@@ -3,6 +3,7 @@ export interface User {
   email: string;
   full_name: string;
   created_at: string;
+  isAdmin: boolean;
 }
 
 export interface Resume {

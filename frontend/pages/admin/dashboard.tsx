@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useAuth } from '@/lib/auth';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
 } from 'recharts';
-import { useAuth } from '@/lib/auth';
 
 interface DashboardStats {
   total_users: number;
