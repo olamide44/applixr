@@ -62,7 +62,7 @@ export default function Home() {
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-3xl font-bold mb-8">Ready to Transform Your Job Search?</h2>
             <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-              Join thousands of job seekers who have streamlined their application process with our platform.
+              Join the job seekers who have streamlined their application process with our platform.
             </p>
             <Link href="/auth/signup" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
               Start Your Journey Today
