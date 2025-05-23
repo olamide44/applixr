@@ -58,21 +58,21 @@ export default function Dashboard() {
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome, {user?.full_name}!</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-indigo-50 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-indigo-900">Analyze Resumes</h3>
+            <h3 className="text-lg font-medium text-indigo-900">Resumes</h3>
             <p className="text-3xl font-bold text-indigo-600">{resumes.length}</p>
             <Link href="/resumes" className="text-indigo-600 hover:text-indigo-900">
               View all →
             </Link>
           </div>
           <div className="bg-green-50 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-green-900">Generate Cover Letters</h3>
+            <h3 className="text-lg font-medium text-green-900">Cover Letters</h3>
             <p className="text-3xl font-bold text-green-600">{coverLetters.length}</p>
             <Link href="/cover-letters" className="text-green-600 hover:text-green-900">
               View all →
             </Link>
           </div>
           <div className="bg-blue-50 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-blue-900">Track Applications</h3>
+            <h3 className="text-lg font-medium text-blue-900">Applications</h3>
             <p className="text-3xl font-bold text-blue-600">{applications.length}</p>
             <Link href="/applications" className="text-blue-600 hover:text-blue-900">
               View all →
