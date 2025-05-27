@@ -22,7 +22,7 @@ export default function Home() {
                 Streamline Your Job Search Journey
               </h1>
               <p className="text-xl text-center mb-12 max-w-2xl">
-                Track applications, get AI-powered insights, and land your dream job with our comprehensive platform.
+                Track applications, get AI-powered insights, and land your dream job.
               </p>
               <div className="flex gap-4">
                 <Link href="/auth/signup" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
@@ -39,7 +39,7 @@ export default function Home() {
         {/* Features Section */}
         <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-6">
-            <h2 className="text-3xl font-bold text-center mb-12">Why Choose Our Platform?</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Why Choose This Platform?</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold mb-4">AI-Powered Insights</h3>
@@ -62,7 +62,7 @@ export default function Home() {
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-3xl font-bold mb-8">Ready to Transform Your Job Search?</h2>
             <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-              Join the job seekers who have streamlined their application process with our platform.
+              Join the job seekers who have streamlined their application process with this platform.
             </p>
             <Link href="/auth/signup" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
               Start Your Journey Today
