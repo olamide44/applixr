@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from ..database import get_db
-from ..models import User
-from ..config import settings
-import jwt as pyjwt  # disambiguate the import
+from database import get_db
+from models import User
+from config import settings
+from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from typing import Optional
+from schemas import RegisterRequest  # if in a separate file
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -27,7 +28,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = pyjwt.encode(to_encode, settings.SECRET_KEY, algorithm="HS256")
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm="HS256")
     return encoded_jwt
 
 async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
@@ -37,7 +38,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = pyjwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
         user_id = payload.get("sub")
         if user_id is None:
             raise credentials_exception
@@ -47,7 +48,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
             raise credentials_exception
             
         return user
-    except pyjwt.PyJWTError:
+    except jwt.JWTError:
         raise credentials_exception
 
 @router.post("/token")
@@ -96,26 +97,23 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     }
 
 @router.post("/register")
-async def register(email: str, password: str, full_name: str, db: Session = Depends(get_db)):
-    # Check if user already exists
-    if db.query(User).filter(User.email == email).first():
+async def register(data: RegisterRequest, db: Session = Depends(get_db)):
+    if db.query(User).filter(User.email == data.email).first():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered"
         )
-    
-    # Create new user
-    hashed_password = get_password_hash(password)
+
+    hashed_password = get_password_hash(data.password)
     user = User(
-        email=email,
+        email=data.email,
         hashed_password=hashed_password,
-        full_name=full_name
+        full_name=data.full_name
     )
     db.add(user)
     db.commit()
     db.refresh(user)
-    
-    # Generate token
+
     access_token = create_access_token({"sub": str(user.id)})
     return {
         "access_token": access_token,

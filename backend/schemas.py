@@ -27,3 +27,8 @@ class User(UserBase):
 
     class Config:
         from_attributes = True 
+        
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    full_name: str

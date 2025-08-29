@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
-from ..database import get_db
-from ..models import User, Resume
-from ..config import settings
+from database import get_db
+from models import User, Resume
+from config import settings
 from fastapi.security import OAuth2PasswordBearer
 import os
 import json
@@ -11,8 +11,8 @@ from openai import AsyncOpenAI
 from PyPDF2 import PdfReader
 from docx import Document
 import shutil
-import jwt
-from ..routers.auth import get_current_user
+from jose import JWTError, jwt
+from routers.auth import get_current_user
 
 router = APIRouter(prefix="/resumes", tags=["Resumes"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
@@ -32,7 +32,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
             raise HTTPException(status_code=401, detail="User not found")
             
         return user
-    except jwt.PyJWTError:
+    except jwt.JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
 def extract_text_from_pdf(file_path: str) -> str:

@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, Form
 from sqlalchemy.orm import Session
-from ..database import get_db
-from ..models import User, CoverLetter, Resume
-from ..config import settings
+from database import get_db
+from models import User, CoverLetter, Resume
+from config import settings
 from fastapi.security import OAuth2PasswordBearer
 from openai import AsyncOpenAI
 import json
-import jwt
-from ..routers.auth import get_current_user
+from jose import JWTError, jwt
+from routers.auth import get_current_user
 
 router = APIRouter(prefix="/cover-letters", tags=["Cover Letters"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
@@ -24,7 +24,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
             raise HTTPException(status_code=401, detail="User not found")
             
         return user
-    except jwt.PyJWTError:
+    except jwt.JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
 async def generate_cover_letter(resume_text: str, job_description: str, tone: str) -> str:
@@ -186,4 +186,4 @@ async def read_users_me(current_user: User = Depends(get_current_user)):
         "id": current_user.id,
         "email": current_user.email,
         "full_name": current_user.full_name
-    } 
+    }

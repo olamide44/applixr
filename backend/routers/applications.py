@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, Form
 from sqlalchemy.orm import Session
-from ..database import get_db
-from ..models import User, Application, Resume, CoverLetter
-from ..config import settings
+from database import get_db
+from models import User, Application, Resume, CoverLetter
+from config import settings
 from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime
-import jwt
-from ..routers.auth import get_current_user
+from jose import JWTError, jwt
+from routers.auth import get_current_user
 from datetime import date
 
 router = APIRouter(prefix="/applications", tags=["Applications"])
@@ -24,7 +24,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
             raise HTTPException(status_code=401, detail="User not found")
             
         return user
-    except jwt.PyJWTError:
+    except jwt.JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
 @router.post("/")
@@ -34,7 +34,7 @@ async def create_application(
     resume_id: int = Form(...),
     cover_letter_id: int = Form(None),
     job_url: str = Form(None),
-    application_deadline: datetime = Form(None),
+    application_deadline: date = Form(None),
     notes: str = Form(None),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)

@@ -6,8 +6,7 @@ from datetime import datetime
 from passlib.context import CryptContext
 import enum
 from datetime import date
-
-Base = declarative_base()
+from database import Base  # ✅ Use the shared Base
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -74,6 +73,18 @@ class CoverLetter(Base):
     resume = relationship("Resume", back_populates="cover_letters")
     applications = relationship("Application", back_populates="cover_letter")
 
+class Company(Base):
+    __tablename__ = "companies"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True, nullable=False)
+    website = Column(String, nullable=True)
+    industry = Column(String, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    applications = relationship("Application", back_populates="company")
+
 class Application(Base):
     __tablename__ = "applications"
 
@@ -81,6 +92,7 @@ class Application(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     resume_id = Column(Integer, ForeignKey("resumes.id"))
     cover_letter_id = Column(Integer, ForeignKey("cover_letters.id"), nullable=True)
+    company_id = Column(Integer, ForeignKey("companies.id"), nullable=True)
     company_name = Column(String, nullable=False)
     position = Column(String, nullable=False)
     job_url = Column(String, nullable=True)
@@ -92,4 +104,5 @@ class Application(Base):
 
     user = relationship("User", back_populates="applications")
     resume = relationship("Resume", back_populates="applications")
-    cover_letter = relationship("CoverLetter", back_populates="applications") 
+    cover_letter = relationship("CoverLetter", back_populates="applications")
+    company = relationship("Company", back_populates="applications") 
