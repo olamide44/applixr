@@ -6,7 +6,7 @@ import uvicorn
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from models import User, Resume, CoverLetter, Application  # 👈 forces SQLAlchemy to register the model
+from models import User, Resume, CoverLetter, Application
 from routers import auth, resumes, cover_letters, applications, admin
 from database import engine, Base
 from config import settings
@@ -25,7 +25,7 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://applixr-frontend.vercel.app", "https://applixr-frontend-git-main-olamides-projects-b08584a5.vercel.app", "https://applixr-frontend-mj3gidbw0-olamides-projects-b08584a5.vercel.app"],  # Frontend URL
+    allow_origins = os.getenv("ALLOW_ORIGINS", "").split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

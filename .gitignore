@@ -4,3 +4,5 @@ backend/.env.example
 backend/alembic.ini
 backend/alembic/
 backend/uploads/
+frontend/.env.example
+frontend/.env.local
