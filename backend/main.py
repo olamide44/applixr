@@ -10,6 +10,8 @@ from models import User, Resume, CoverLetter, Application
 from routers import auth, resumes, cover_letters, applications, admin
 from database import engine, Base
 from config import settings
+from contextlib import asynccontextmanager
+
 
 
 app = FastAPI(
@@ -26,6 +28,14 @@ def _parse_allow_origins(v: str):
     if v == "*":
         return ["*"]
     return [s.strip() for s in v.split(",") if s.strip()]
+
+# Lifespan context replaces on_event
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup logic
+    Base.metadata.create_all(bind=engine)
+    yield
+    # Shutdown logic (optional)
 
 
 # Configure CORS
@@ -44,10 +54,6 @@ app.include_router(cover_letters.router)
 app.include_router(applications.router)
 app.include_router(admin.router)
 
-@app.lifespan("startup")
-def on_startup():
-    Base.metadata.create_all(bind=engine)
-
 
 @app.get("/")
 async def root():
@@ -58,4 +64,4 @@ async def health_check():
     return {"status": "healthy"}
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000)
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", "8000")))
