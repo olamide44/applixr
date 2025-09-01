@@ -8,9 +8,6 @@ from sqlalchemy.orm import Session
 import models, schemas
 from database import get_db
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # JWT Configuration
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")

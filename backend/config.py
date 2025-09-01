@@ -19,8 +19,8 @@ class Settings(BaseSettings):
     # Environment
     ENVIRONMENT: str = "development"
     
-    class Config:
-        env_file = ".env"
-        extra = "ignore"  # Ignore extra fields in .env file
+#    class Config:
+#        env_file = ".env"
+#        extra = "ignore"  # Ignore extra fields in .env file
 
 settings = Settings() 
