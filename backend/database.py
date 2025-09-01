@@ -2,7 +2,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
-from config import settings
 
 def _coalesce_db_url() -> str:
     # Prefer SQLALCHEMY_DATABASE_URL, fall back to Railway's DATABASE_URL

@@ -12,9 +12,6 @@ from database import engine, Base
 from config import settings
 
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(
     title="Job Application Platform API",
     description="API for managing job applications, resumes, and cover letters",
@@ -46,6 +43,11 @@ app.include_router(resumes.router)
 app.include_router(cover_letters.router)
 app.include_router(applications.router)
 app.include_router(admin.router)
+
+@app.lifespan("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
+
 
 @app.get("/")
 async def root():

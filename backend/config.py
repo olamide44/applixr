@@ -1,9 +1,10 @@
 from pydantic_settings import BaseSettings
 import secrets
+from typing import Optional
 
 class Settings(BaseSettings):
     # Database settings
-    DATABASE_URL: str     
+    DATABASE_URL: Optional[str] = None
     # JWT settings
     SECRET_KEY: str = secrets.token_urlsafe(32)  # Generate a secure random key
     JWT_ALGORITHM: str = "HS256"
@@ -16,11 +17,12 @@ class Settings(BaseSettings):
     UPLOAD_DIR: str = "uploads"
     MAX_UPLOAD_SIZE: int = 5 * 1024 * 1024  # 5MB
     
+    ALLOW_ORIGINS: str = "*"     # default is fine on Railway
+    
     # Environment
     ENVIRONMENT: str = "development"
     
-#    class Config:
-#        env_file = ".env"
-#        extra = "ignore"  # Ignore extra fields in .env file
+    DEBUG: bool = False
+
 
 settings = Settings() 
