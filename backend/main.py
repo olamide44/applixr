@@ -33,7 +33,7 @@ async def lifespan(app: FastAPI):
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = ["https://applixr-frontend.vercel.app","https://applixr-frontend-git-main-olamides-projects-b08584a5.vercel.app","https://applixr-frontend-mj3gidbw0-olamides-projects-b08584a5.vercel.app"],
+    allow_origins = ["https://www.applixr.com", "https://applixr-frontend.vercel.app","https://applixr-frontend-git-main-olamides-projects-b08584a5.vercel.app","https://applixr-frontend-mj3gidbw0-olamides-projects-b08584a5.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
