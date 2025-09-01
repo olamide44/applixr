@@ -21,14 +21,6 @@ app = FastAPI(
     debug=True
 )
 
-def _parse_allow_origins(v: str):
-    v = (v or "").strip()
-    if not v:
-        return []
-    if v == "*":
-        return ["*"]
-    return [s.strip() for s in v.split(",") if s.strip()]
-
 # Lifespan context replaces on_event
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -41,7 +33,7 @@ async def lifespan(app: FastAPI):
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = _parse_allow_origins(os.getenv("ALLOW_ORIGINS", "")),
+    allow_origins = ["https://applixr-frontend.vercel.app","https://applixr-frontend-git-main-olamides-projects-b08584a5.vercel.app","https://applixr-frontend-mj3gidbw0-olamides-projects-b08584a5.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
