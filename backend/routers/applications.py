@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Form
+from fastapi import APIRouter, Depends, HTTPException, Form, status
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User, Application, Resume, CoverLetter
@@ -11,21 +11,35 @@ from datetime import date
 
 router = APIRouter(prefix="/applications", tags=["Applications"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
+ALGORITHM = "HS256"
 
-async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+):
+    creds_exc = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-        user_id = payload.get("sub")
-        if user_id is None:
-            raise HTTPException(status_code=401, detail="Invalid token")
-            
-        user = db.query(User).filter(User.id == user_id).first()
-        if user is None:
-            raise HTTPException(status_code=401, detail="User not found")
-            
-        return user
-    except jwt.JWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError:
+        raise creds_exc
+
+    sub = payload.get("sub")
+    if sub is None:
+        raise creds_exc
+
+    try:
+        user_id = int(sub)  # 👈 cast to int to match INTEGER PK
+    except ValueError:
+        raise creds_exc
+
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise creds_exc
+    return user
 
 @router.post("/")
 async def create_application(
